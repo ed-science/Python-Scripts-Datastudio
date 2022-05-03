@@ -122,9 +122,9 @@ sql=o.execute_sql(query).open_reader()
 Filename='MegaL3_special'
 df=pd.DataFrame.from_records(sql)
 #Write
-df.to_csv(Filename+'.csv',index=False)
+df.to_csv(f'{Filename}.csv', index=False)
 # Read
-df=pd.read_csv(Filename+'.csv')
+df = pd.read_csv(f'{Filename}.csv')
 #drop first duplicate row
 df.drop(df.index[:1], inplace=True)
 column_name=['child_campaign_name','campaign_price','venture_category1_name_en','venture_category2_name_en','venture_category3_name_en',\
@@ -138,7 +138,7 @@ remove_end_brace=")"
 remove_first_quotes="'"
 remove_last_quotes="'"
 remove_comma=","
-for i in range(0,num_of_col):
+for i in range(num_of_col):
     df_1=df.iloc[:,i].astype(str).str.replace(remove_first_brace,"")
     df_1=df_1.str.replace(str(column_name[i]),"")
     df_1=df_1.str.replace(remove_end_brace,"")
@@ -147,8 +147,8 @@ for i in range(0,num_of_col):
     df_1=df_1.str.replace(remove_comma,"")
     df_1=df_1.str.lstrip()
     df.iloc[:,i]=df_1
-df.to_csv(Filename+'.csv',index=False)
-Mega=pd.read_csv(Filename+'.csv')
+df.to_csv(f'{Filename}.csv', index=False)
+Mega = pd.read_csv(f'{Filename}.csv')
 Mega['AIV']=Mega['nmv']/Mega['items_sold']
 Mega['AOV']=Mega['nmv']/Mega['orders']
 Mega['G2N']=Mega['nmv']/Mega['gmv']
