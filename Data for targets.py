@@ -38,9 +38,9 @@ sql=o.execute_sql(query).open_reader()
 Filename='Target'
 df=pd.DataFrame.from_records(sql)
 #Write
-df.to_csv(Filename+'.csv',index=False)
+df.to_csv(f'{Filename}.csv', index=False)
 # Read
-df=pd.read_csv(Filename+'.csv')
+df = pd.read_csv(f'{Filename}.csv')
 #drop first duplicate row
 df.drop(df.index[:1], inplace=True)
 column_name=['venture_category1_name_en',
@@ -59,7 +59,7 @@ remove_end_brace=")"
 remove_first_quotes="'"
 remove_last_quotes="'"
 remove_comma=","
-for i in range(0,num_of_col):
+for i in range(num_of_col):
     df_1=df.iloc[:,i].astype(str).str.replace(remove_first_brace,"")
     df_1=df_1.str.replace(str(column_name[i]),"")
     df_1=df_1.str.replace(remove_end_brace,"")
@@ -68,7 +68,7 @@ for i in range(0,num_of_col):
     df_1=df_1.str.replace(remove_comma,"")
     df_1=df_1.str.lstrip()
     df.iloc[:,i]=df_1
-df.to_csv(Filename+'.csv',index=False)
+df.to_csv(f'{Filename}.csv', index=False)
 df=pd.read_csv('Target.csv')
 df=df.rename(columns={'date_time':'month'})
 monthmap={1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'}
@@ -114,7 +114,7 @@ def dfs_tabs(df_list, sheet_list, file_name):
 
 # list of dataframes and sheet names
 dfs = [cat1, cat2, cat3]
-sheets = ['cat1','cat2','cat3']    
+sheets = ['cat1','cat2','cat3']
 daterun= arrow.now().format('YYYYMMDD')+'_'
 # run function
-dfs_tabs(dfs, sheets,str(daterun)+'TargetFile.xlsx')
+dfs_tabs(dfs, sheets, f'{str(daterun)}TargetFile.xlsx')

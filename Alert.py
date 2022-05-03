@@ -63,9 +63,9 @@ sql=o.execute_sql(query).open_reader()
 Filename='Alert'
 df=pd.DataFrame.from_records(sql)
 #Write
-df.to_csv(Filename+'.csv',index=False)
+df.to_csv(f'{Filename}.csv', index=False)
 # Read
-df=pd.read_csv(Filename+'.csv')
+df = pd.read_csv(f'{Filename}.csv')
 #drop first duplicate row
 df.drop(df.index[:1], inplace=True)
 column_name=['daraz_sku','product_name','venture_category1_name_en','venture_category2_name_en','venture_category3_name_en'\
@@ -81,7 +81,7 @@ remove_end_brace=")"
 remove_first_quotes="'"
 remove_last_quotes="'"
 remove_comma=","
-for i in range(0,num_of_col):
+for i in range(num_of_col):
     df_1=df.iloc[:,i].astype(str).str.replace(remove_first_brace,"")
     df_1=df_1.str.replace(str(column_name[i]),"")
     df_1=df_1.str.replace(remove_end_brace,"")
@@ -90,7 +90,7 @@ for i in range(0,num_of_col):
     df_1=df_1.str.replace(remove_comma,"")
     df_1=df_1.str.lstrip()
     df.iloc[:,i]=df_1
-df.to_csv(Filename+'.csv',index=False)
+df.to_csv(f'{Filename}.csv', index=False)
 
 date_string= arrow.now().format('YYYYMMDD')+'_'
 writer = pd.ExcelWriter(str(date_string)+Filename+'.xlsx')
